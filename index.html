@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LessGo - Registeration </title>
+    <link rel="icon" type="image/ico" href="images/favicon.ico" />
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <!--For Animation For Signup-->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <meta name="google-signin-client_id" content="360265813944-uaa4ijf7ik66q243rdnite6tlveh030e.apps.googleusercontent.com">
+    <meta name="google-signin-cookiepolicy" content="single_host_origin">
+    <meta name="google-signin-scope" content="profile email">
+
+
+    <!-- Google Sign In -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!--// Initialize Firebase-->
+    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <script>
+        var config = {
+            apiKey: "AIzaSyAtMWS8NoaXQFc3NST-Z8ZfmHZdPL0FEcQ",
+            authDomain: "authentication-43ae1.firebaseapp.com",
+            databaseURL: "https://authentication-43ae1.firebaseio.com",
+            projectId: "authentication-43ae1",
+            storageBucket: "authentication-43ae1.appspot.com",
+            messagingSenderId: "378170239572"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script type="text/javascript">
+
+        // [START googlecallback]
+        function onSignIn(googleUser) {
+            console.log('Google Auth Response', googleUser);
+            // We need to register an Observer on Firebase Auth to make sure auth is initialized.
+            var unsubscribe = firebase.auth().onAuthStateChanged(function (firebaseUser) {
+                unsubscribe();
+                // Check if we are already signed-in Firebase with the correct user.
+                if (!isUserEqual(googleUser, firebaseUser)) {
+                    // Build Firebase credential with the Google ID token.
+                    // [START googlecredential]
+                    var credential = firebase.auth.GoogleAuthProvider.credential(
+                        googleUser.getAuthResponse().id_token);
+                    // [END googlecredential]
+                    // Sign in with credential from the Google user.
+                    // [START authwithcred]
+                    firebase.auth().signInAndRetrieveDataWithCredential(credential).catch(function (error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        // The email of the user's account used.
+                        var email = error.email;
+                        // The firebase.auth.AuthCredential type that was used.
+                        var credential = error.credential;
+                        // [START_EXCLUDE]
+                        if (errorCode === 'auth/account-exists-with-different-credential') {
+                            alert('You have already signed up with a different auth provider for that email.');
+                            // If you are using multiple auth providers on your app you should handle linking
+                            // the user's accounts here.
+                        } else {
+                            console.error(error);
+                        }
+                        // [END_EXCLUDE]
+                    });
+                    // [END authwithcred]
+                } else {
+                    console.log('User already signed-in Firebase.');
+                }
+            });
+        }
+        // [END googlecallback]
+
+        /**
+         * Check that the given Google user is equals to the given Firebase user.
+         */
+        // [START checksameuser]
+        function isUserEqual(googleUser, firebaseUser) {
+            if (firebaseUser) {
+                var providerData = firebaseUser.providerData;
+                for (var i = 0; i < providerData.length; i++) {
+                    if (providerData[i].providerId === firebase.auth.GoogleAuthProvider.PROVIDER_ID &&
+                        providerData[i].uid === googleUser.getBasicProfile().getId()) {
+                        // We don't need to reauth the Firebase connection.
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        // [END checksameuser]
+
+        /**
+         * Handle the sign out button press.
+         */
+        function handleSignOut() {
+            var googleAuth = gapi.auth2.getAuthInstance();
+            googleAuth.signOut().then(function () {
+                firebase.auth().signOut();
+            });
+        }
+
+
+        /**
+         * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+         *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+         *    out, and that is where we update the UI.
+         */
+        function initApp() {
+            // Auth state changes.
+            // [START authstatelistener]
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    // User is signed in.
+                    var displayName = user.displayName;
+                    var email = user.email;
+                    var emailVerified = user.emailVerified;
+                    var photoURL = user.photoURL;
+                    var isAnonymous = user.isAnonymous;
+                    var uid = user.uid;
+                    var providerData = user.providerData;
+                    // [START_EXCLUDE]
+                    window.location.href = "dashboard/db.html";
+                    document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+                    document.getElementById('signout').disabled = false;
+                    document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+                    // [END_EXCLUDE]
+                } 
+            });
+            // [END authstatelistener]
+
+            document.getElementById('signout').addEventListener('click', handleSignOut, false);
+        }
+
+        window.onload = function () {
+            initApp();
+        };
+    </script>
+
+</head>
+
+<body>
+
+    <div class="main">
+
+        <section class="signup">
+            <div class="form">
+                <form method="POST" id="signup-form" class="signup-content" autocomplete="off">
+                    <h2 class="form-title">Create account</h2>
+                    <div class="form-group">
+                        <input type="text" class="form-input" name="name" id="name" placeholder="Your Name" />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" name="email" placeholder="Your Email" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="password" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="re_password" id="re_password" placeholder="Repeat your password" />
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                        <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all
+                            statements in <a href="#" class="term-service">Terms of service</a></label>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="form-submit" value="Sign up" />
+                    </div>
+
+                    <div>
+                        <a href="./orderForm/order.html" style="color: white;">ORDER FORM</a>
+                    </div>
+
+                    <p class="message" data-aos="fade-up" data-aos-duration="800">
+                        Have already an account ? <a href="#" class="message-link">Login here</a>
+                    </p>
+
+                    <p class="option" data-aos="fade-up" data-aos-duration="800">(OR)</p>
+                    <p class="option" data-aos="fade-up" data-aos-duration="800">SIGN UP WITH</p>
+
+                    <div id="social" data-aos="fade-up" data-aos-duration="800">
+                        <button id="fb">f</button>
+                        <!-- [START google_button] -->
+                        <div id="google" class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+                        <!-- [END google_button] -->
+                        <br>
+                        <button disabled class="mdl-button mdl-js-button mdl-button--raised" id="signout" name="signout"
+                            style="display: none;">Sign Out</button>
+                    </div>
+                </form>
+
+                <form method="POST" id="login-form" class="login-content" autocomplete="off">
+                    <h2 class="form-title">Welcome Back</h2>
+                    <div class="form-group">
+                        <input type="email" class="form-input" name="email" placeholder="Your Email" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-input" name="password" placeholder="Password" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="form-submit" value="Log In" />
+                    </div>
+                    <p class="message">
+                        Create a New Account. <a href="#" class="message-link">Sign Up</a>
+                    </p>
+                </form>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- JS -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <script>
+        $('.message-link').click(function () {
+            $('form').animate({ height: "toggle", opacity: "toggle" }, "slow");
+        });
+    </script>
+
+    <!--For Animation-->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+</body>
+
+</html>

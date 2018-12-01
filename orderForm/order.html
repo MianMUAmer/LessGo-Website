@@ -1,0 +1,153 @@
+<!DOCTYPE <!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="orderStyle.css" />
+</head>
+
+<body>
+
+    <nav id="nav">
+        <a href="../index.html"><img src="../images/left-arrow.png" style="height: 60px"></a>
+        <h1>Ankara Hot And Spicy</h1>
+        <div id="opts">
+            <div class="options"><a href="#">HOME</a></div>
+            <div class="options"><a href="#">CONTACT</a></div>
+            <div class="options"><a href="#">LOGOUT</a></div>
+        </div>
+    </nav>
+
+    <div id="img"></div>
+
+    <div id="sec">
+        <div id="leftSec">
+            <input type="button" name="normal" value="Normal" class="type">
+
+            <div id="qty">
+                <h4>Quantity</h4>
+                <div id="downButton">
+                    <select id="vals">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="ingr">
+                <h4>Select The Ingredients</h4><br>
+                <br><span class="ingredients">Onions</span>
+                <input type="checkbox" name="CheckBox" value="Onions">
+                <span class="ingredients">Cucumbers</span>
+                <input type="checkbox" name="Ing." value="Cucumber"><br>
+                <span class="ingredients">Corn</span>
+                <input type="checkbox" name="Ing." value="Corn">
+                <span class="ingredients">Lattice</span>
+                <input type="checkbox" name="Ing." value="Lattice"><br>
+                <span class="ingredients">Black Pepper</span>
+                <input type="checkbox" name="Ing." value="Black Pepper">
+                <span class="ingredients">Red Pepper</span>
+                <input type="checkbox" name="Ing." value="Red pepper"><br>
+                <br>
+            </div>
+        </div>
+
+        <div id="rightSec">
+            <input type="button" name="custom" value="Custom" class="type">
+            <p style="padding: 15px 60px;">For Odd Quantity of Durums price will be TL 5.5TL/durum. Otherwise regular
+                rates will apply (i.e. 5TL/durum)</p>
+
+            <div id="aci">
+                <div class="custQty">
+                    <h4>Quantity of Aci</h4>
+                    <select id="vals">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+
+                <div class="custIngr">
+                    <h4>Select The Ingredients</h4><br>
+                    <br><span class="ingredients">Onions</span>
+                    <input type="checkbox" name="CheckBox" value="Onions">
+                    <span class="ingredients">Cucumbers</span>
+                    <input type="checkbox" name="Ing." value="Cucumber"><br>
+                    <span class="ingredients">Corn</span>
+                    <input type="checkbox" name="Ing." value="Corn">
+                    <span class="ingredients">Lattice</span>
+                    <input type="checkbox" name="Ing." value="Lattice"><br>
+                    <span class="ingredients">Black Pepper</span>
+                    <input type="checkbox" name="Ing." value="Black Pepper">
+                    <span class="ingredients">Red Pepper</span>
+                    <input type="checkbox" name="Ing." value="Red pepper"><br>
+                    <br>
+                </div>
+            </div>
+
+
+            <div id="bbq">
+                <div class="custQty">
+                    <h4>Quantity Of BBQ</h4>
+                    <select id="vals">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+
+                <div class="custIngr">
+                    <h4>Select The Ingredients</h4><br>
+                    <br><span class="ingredients">Onions</span>
+                    <input type="checkbox" name="CheckBox" value="Onions">
+                    <span class="ingredients">Cucumbers</span>
+                    <input type="checkbox" name="Ing." value="Cucumber"><br>
+                    <span class="ingredients">Corn</span>
+                    <input type="checkbox" name="Ing." value="Corn">
+                    <span class="ingredients">Lattice</span>
+                    <input type="checkbox" name="Ing." value="Lattice"><br>
+                    <span class="ingredients">Black Pepper</span>
+                    <input type="checkbox" name="Ing." value="Black Pepper">
+                    <span class="ingredients">Red Pepper</span>
+                    <input type="checkbox" name="Ing." value="Red pepper"><br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="total">
+        <h2 style="color: orangered">Total Bill : </h2>
+        <h2 style="color: orangered">0.0 &#8378</h2>
+    </div>
+
+    <div id="button">
+        <input type="button" name="submit" value="Order Complete" class="submit">
+    </div>
+
+    
+</body>
+
+</html>
